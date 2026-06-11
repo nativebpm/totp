@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+
+
 // Validate checks if the provided 6-digit TOTP token is valid for the current time
 // using the base32-encoded secret. It allows for a drift of 1 step (30 seconds)
 // before and after to accommodate clock desynchronization.
@@ -52,6 +54,7 @@ func Generate(secret string, timestamp int64) (string, error) {
 
 // validateAt performs the actual TOTP validation without allocating a Validator builder.
 func validateAt(token string, secret string, timestamp int64, drift int) bool {
+	token = strings.TrimSpace(token)
 	secret = strings.TrimSpace(secret)
 	hasLower := false
 	for i := 0; i < len(secret); i++ {
@@ -72,10 +75,10 @@ func validateAt(token string, secret string, timestamp int64, drift int) bool {
 		}
 	}
 
-	token = strings.TrimSpace(token)
 	if len(token) != 6 {
 		return false
 	}
+
 
 	step := timestamp / 30
 

@@ -134,3 +134,4 @@ func BenchmarkTOTPValidate(b *testing.B) {
 		_ = ValidateAt(token, secret, 1700000000)
 	}
 }
+
